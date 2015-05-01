@@ -1,0 +1,118 @@
+<project name="KWIC" default="dist" basedir=".">
+
+  <!-- TASK DEFS -->
+
+  <taskdef name="junit"
+           classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
+    <classpath>
+      <pathelement location="${ant.home}/lib/ant-junit.jar"/>
+      <pathelement location="jars/junit-4.12.jar"/>
+    </classpath>
+  </taskdef>
+
+  <!-- directory that contains emma.jar and emma_ant.jar: -->
+  <!-- <property name="emma.dir" value="${basedir}/jars" /> -->
+
+  <!-- <path id="emma.lib" > -->
+  <!--   <pathelement location="${emma.dir}/emma.jar" /> -->
+  <!--   <pathelement location="${emma.dir}/emma_ant.jar" /> -->
+  <!-- </path> -->
+
+  <!-- <taskdef resource="emma_ant.properties" classpathref="emma.lib" /> -->
+
+  <!-- set global properties for this build -->
+  <property name="src" location="src/main/java"/>
+  <property name="testsrc" location="src/test/java"/>
+  <property name="build" location="build"/>
+  <property name="testbuild" location="testbuild"/>
+  <property name="dist"  location="dist"/>
+  <property name="output" location="output" />
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by build -->
+    <mkdir dir="${build}"/>
+    <mkdir dir="${testbuild}" />
+    <mkdir dir="${output}" />
+  </target>
+
+  <target name="build" depends="init"
+        description="build the source " >
+    <!-- Build the java code from ${src} into ${build} -->
+    <javac debug="true" srcdir="${src}" destdir="${build}" includeantruntime="false" />
+  </target>
+
+  <target name="dist" depends="build"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${dist}/lib/KWIC-${DSTAMP}.jar" basedir="${build}"/>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+    <delete dir="${testbuild}"/>
+    <delete dir="${output}"/>
+  </target>
+
+
+  <target name="test" depends="build" >
+    <javac debug="true" srcdir="${testsrc}" destdir="${testbuild}" classpath="jars/junit-4.12.jar:${build}" includeantruntime="false"  />
+
+    <!-- Emma instrumentation -->
+    <!-- <emma enabled="false" verbosity="verbose"> -->
+    <!--     <instr instrpath="${build}" -->
+    <!--            metadatafile="${output}/metadata.em" -->
+    <!--            merge="true"  -->
+    <!--            mode="overwrite" > -->
+    <!--     </instr> -->
+    <!--     <instr instrpath="${testbuild}" -->
+    <!--            metadatafile="${output}/metadata.em" -->
+    <!--            merge="true"  -->
+    <!--            mode="overwrite" > -->
+    <!--     </instr> -->
+    <!-- </emma> -->
+
+    <junit printsummary="yes" haltonfailure="yes" >
+      <classpath>
+	<pathelement location="${testbuild}"/>
+	<pathelement location="${build}"/>
+        <!-- <path refid="emma.lib"/> -->
+      </classpath>
+
+      <formatter type="xml"/>
+
+      <batchtest todir="${output}">
+	<fileset dir="${testbuild}" />
+      </batchtest>
+
+      <!-- <jvmarg value="-XX:-UseSplitVerifier" /> -->
+      <!-- <jvmarg value="-Demma.coverage.out.file=${output}/coverage.ec" /> -->
+      <!-- <jvmarg value="-Demma.coverage.out.merge=false" /> -->
+    </junit>
+
+    <!-- <emma enabled="false" verbosity="verbose"> -->
+    <!--   <report> -->
+    <!--     <sourcepath> -->
+    <!--       <dirset dir="${basedir}"> -->
+    <!--         <include name="${src}"/> -->
+    <!--         <include name="${testsrc}"/> -->
+    <!--       </dirset> -->
+    <!--     </sourcepath> -->
+    <!--     <fileset dir="${output}"> -->
+    <!--       <include name="*.em"/> -->
+    <!--       <include name="*.ec"/> -->
+    <!--     </fileset> -->
+    <!--     <xml outfile="${output}/emma_report.xml" /> -->
+    <!--   </report> -->
+    <!-- </emma> -->
+
+  </target>
+
+</project>
