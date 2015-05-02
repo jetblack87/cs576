@@ -15,6 +15,12 @@
     <classpath path="${basedir}/jars/jacocoant.jar"/>
   </taskdef>
 
+  <property name="findbugs.home" value="${basedir}/jars/findbugs-3.0.1" />
+
+  <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+    <classpath path="${findbugs.home}/lib/findbugs-ant.jar"/>
+  </taskdef>
+
   <!-- set global properties for this build -->
   <property name="src"       location="src/main/java"    />
   <property name="testsrc"   location="src/test/java"    />
@@ -92,6 +98,16 @@
       </structure>
       <xml destfile="${coverage}/jacoco.xml"/>
     </jacoco:report>
+  </target>
+
+  <target name="static" >
+    <findbugs home="${findbugs.home}"
+              output="xml"
+              outputFile="${static}/findbugs.xml" >
+      <auxClasspath path="${basedir}/lib/Regex.jar" />
+      <sourcePath path="${src}" />
+      <class location="${findbugs.home}/lib/bcel-6.0-SNAPSHOT.jar" />
+    </findbugs>
   </target>
 
 </project>
