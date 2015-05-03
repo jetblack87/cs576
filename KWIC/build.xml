@@ -104,9 +104,8 @@
     <findbugs home="${findbugs.home}"
               output="xml"
               outputFile="${static}/findbugs.xml" >
-      <auxClasspath path="${basedir}/lib/Regex.jar" />
       <sourcePath path="${src}" />
-      <class location="${findbugs.home}/lib/bcel-6.0-SNAPSHOT.jar" />
+      <class location="${build}" />
     </findbugs>
   </target>
 
