@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.drexe.cs.cs576.mwa29;
+package edu.drexel.cs.cs576.mwa29;
 
 /**
  * @author mark
