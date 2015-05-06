@@ -3,8 +3,13 @@
  */
 package edu.drexel.cs.cs576.mwa29;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +31,7 @@ public class KwicIndex {
 	}
 
 	public void printHtml(final String outputFile) throws FileNotFoundException {
-		final PrintStream outputStream = getOutputStream(outputFile);
+		final PrintWriter outputStream = getOutputStream(outputFile);
 		List<KwicEntry> sortedIndex = new ArrayList<KwicEntry>(index);
 		Collections.sort(sortedIndex);
 		outputStream.println("<HTML><HEAD/>");
@@ -38,17 +43,22 @@ public class KwicIndex {
 		outputStream.println("</TABLE>");
 		outputStream.println("</BODY>");
 		outputStream.println("</HTML>");
-		if (System.out != outputStream) {
-			outputStream.close();
-		}
 	}
 
-	private PrintStream getOutputStream(final String outputFile)
+	private PrintWriter getOutputStream(final String outputFile)
 			throws FileNotFoundException {
 		if (Constants.STDOUT.equals(outputFile)) {
-			return System.out;
+			return new PrintWriter(System.out);
 		} else {
-			return new PrintStream(outputFile);
+			final File file = new File(outputFile);
+			Writer w = null;
+			try {
+				w = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				System.err.println("UTF-8 is not supported - exiting");
+				System.exit(1);
+			}
+			return new PrintWriter(w);
 		}
 	}
 }

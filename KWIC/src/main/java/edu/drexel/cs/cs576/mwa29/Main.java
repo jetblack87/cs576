@@ -51,22 +51,22 @@ public class Main {
 	private static void printUsage() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(String
-				.format("Usage: java -jar KWIC.jar [%s] [%s <inputFile>] [%s <outputFile>] [%s <stopWordFile>]\n",
+				.format("Usage: java -jar KWIC.jar [%s] [%s <inputFile>] [%s <outputFile>] [%s <stopWordFile>]%n",
 						Constants.HELP_FLAG, Constants.INPUT_FILE_FLAG,
 						Constants.OUTPUT_FILE_FLAG,
 						Constants.STOP_WORD_FILE_FLAG));
-		sb.append(String.format("\t%s : Print this help.\n",
+		sb.append(String.format("\t%s : Print this help.%n",
 				Constants.HELP_FLAG));
 		sb.append(String
-				.format("\t%s : The file that contains the text to process. '%s' indicates STDIN. Defaults to '%s'.\n",
+				.format("\t%s : The file that contains the text to process. '%s' indicates STDIN. Defaults to '%s'.%n",
 						Constants.INPUT_FILE_FLAG, Constants.STDIN,
 						Constants.STDIN));
 		sb.append(String
-				.format("\t%s : The file where the output will be printed. '%s' indicates STDOUT. Defaults to '%s'.\n",
+				.format("\t%s : The file where the output will be printed. '%s' indicates STDOUT. Defaults to '%s'.%n",
 						Constants.OUTPUT_FILE_FLAG, Constants.STDOUT,
 						Constants.STDOUT));
 		sb.append(String
-				.format("\t%s : The file that contains the list of stop words. Defaults to '%s'.\n",
+				.format("\t%s : The file that contains the list of stop words. Defaults to '%s'.%n",
 						Constants.STOP_WORD_FILE_FLAG,
 						Constants.DEFAULT_STOPWORD_FILE));
 		System.out.println(sb.toString());
