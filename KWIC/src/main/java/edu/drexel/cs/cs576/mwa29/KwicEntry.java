@@ -55,14 +55,42 @@ public class KwicEntry implements Comparable<KwicEntry> {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (o instanceof KwicEntry) {
-			return this.keyword.equals(((KwicEntry) o).keyword)
-					&& this.beforeKeyword.equals(((KwicEntry) o).beforeKeyword)
-					&& this.afterKeyword.equals(((KwicEntry) o).afterKeyword);
-		} else {
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((afterKeyword == null) ? 0 : afterKeyword.hashCode());
+		result = prime * result
+				+ ((beforeKeyword == null) ? 0 : beforeKeyword.hashCode());
+		result = prime * result + ((keyword == null) ? 0 : keyword.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
+		KwicEntry other = (KwicEntry) obj;
+		if (afterKeyword == null) {
+			if (other.afterKeyword != null)
+				return false;
+		} else if (!afterKeyword.equals(other.afterKeyword))
+			return false;
+		if (beforeKeyword == null) {
+			if (other.beforeKeyword != null)
+				return false;
+		} else if (!beforeKeyword.equals(other.beforeKeyword))
+			return false;
+		if (keyword == null) {
+			if (other.keyword != null)
+				return false;
+		} else if (!keyword.equals(other.keyword))
+			return false;
+		return true;
 	}
 
 	@Override

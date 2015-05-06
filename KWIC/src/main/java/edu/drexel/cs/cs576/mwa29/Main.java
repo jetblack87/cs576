@@ -4,6 +4,7 @@
 package edu.drexel.cs.cs576.mwa29;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author mark
@@ -43,7 +44,7 @@ public class Main {
 					stopWordFile);
 			final KwicIndex kwicIndex = kwicGenerator.generateKwicIndex();
 			kwicIndex.printHtml(outputFile);
-		} catch (final FileNotFoundException e) {
+		} catch (final FileNotFoundException | UnsupportedEncodingException e) {
 			System.err.println("Failed to print KWIC: " + e.getMessage());
 		}
 	}
