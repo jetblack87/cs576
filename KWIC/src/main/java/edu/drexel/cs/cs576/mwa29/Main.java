@@ -22,10 +22,11 @@ public class Main {
 		String inputFile = Constants.STDIN;
 		String outputFile = Constants.STDOUT;
 		String stopWordFile = Constants.DEFAULT_STOPWORD_FILE;
+		boolean help = false;
 		for (int i = 0; i < args.length; i++) {
 			if (Constants.HELP_FLAG.equals(args[i].toLowerCase())) {
-				printUsage();
-				System.exit(0);
+				help = true;
+				break;
 			} else if (i < args.length - 1) {
 				if (Constants.INPUT_FILE_FLAG.equals(args[i].toLowerCase())) {
 					inputFile = args[i + 1];
@@ -39,13 +40,17 @@ public class Main {
 			}
 		}
 
-		try {
-			final KwicGenerator kwicGenerator = new KwicGenerator(inputFile,
-					stopWordFile);
-			final KwicIndex kwicIndex = kwicGenerator.generateKwicIndex();
-			kwicIndex.printHtml(outputFile);
-		} catch (final FileNotFoundException | UnsupportedEncodingException e) {
-			System.err.println("Failed to print KWIC: " + e.getMessage());
+		if (help) {
+			printUsage();
+		} else {
+			try {
+				final KwicGenerator kwicGenerator = new KwicGenerator(
+						inputFile, stopWordFile);
+				final KwicIndex kwicIndex = kwicGenerator.generateKwicIndex();
+				kwicIndex.printHtml(outputFile);
+			} catch (final FileNotFoundException | UnsupportedEncodingException e) {
+				System.err.println("Failed to print KWIC: " + e.getMessage());
+			}
 		}
 	}
 

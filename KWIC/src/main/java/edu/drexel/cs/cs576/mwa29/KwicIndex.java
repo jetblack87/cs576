@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -25,6 +24,10 @@ public class KwicIndex {
 
 	public KwicIndex() {
 		index = new ArrayList<KwicEntry>();
+	}
+
+	public List<KwicEntry> getIndex() {
+		return Collections.unmodifiableList(index);
 	}
 
 	public void add(KwicEntry kwicEntry) {
