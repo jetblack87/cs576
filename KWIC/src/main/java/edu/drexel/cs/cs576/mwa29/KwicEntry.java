@@ -37,7 +37,7 @@ public class KwicEntry implements Comparable<KwicEntry> {
 
 	public String toHtmlRow() {
 		return String.format(
-				"<TR><TD>%s</TD><TD>%s</TD><TD><BOLD>%s</BOLD></TD></TR>",
+				"<TR><TD ALIGN='right'>%s</TD><TD><B>%s</B></TD><TD>%s</TD></TR>",
 				beforeKeyword, keyword, afterKeyword);
 	}
 
