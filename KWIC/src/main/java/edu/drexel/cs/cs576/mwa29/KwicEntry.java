@@ -15,6 +15,17 @@ public class KwicEntry implements Comparable<KwicEntry> {
 	private final String beforeKeyword;
 	private final String afterKeyword;
 
+	/**
+	 * Creates a {@link KwicEntry} with the given keyword, beforeKeyword and
+	 * afterKeyword.
+	 * 
+	 * @param keyword
+	 *            the keyword for this entry
+	 * @param beforeKeyword
+	 *            the text before the keyword
+	 * @param afterKeyword
+	 *            the text after the keyword
+	 */
 	public KwicEntry(final String keyword, final String beforeKeyword,
 			final String afterKeyword) {
 		super();
@@ -31,27 +42,31 @@ public class KwicEntry implements Comparable<KwicEntry> {
 
 	@Override
 	public String toString() {
+		String beforeKeywordString = "".equals(beforeKeyword) ? "" : beforeKeyword + " ";
+		String afterKeywordString = "".equals(afterKeyword) ? "" : " " + afterKeyword;
 		return String
-				.format("%s [%s] %s", beforeKeyword, keyword, afterKeyword);
+				.format("%s[%s]%s", beforeKeywordString, keyword, afterKeywordString);
 	}
 
 	public String toHtmlRow() {
-		return String.format(
-				"<TR><TD ALIGN='right'>%s</TD><TD><B>%s</B></TD><TD>%s</TD></TR>",
-				beforeKeyword, keyword, afterKeyword);
+		return String
+				.format("<TR><TD ALIGN='right'>%s</TD><TD><B>%s</B></TD><TD>%s</TD></TR>",
+						beforeKeyword, keyword, afterKeyword);
 	}
 
 	private static String join(String separator, List<String> strings) {
-		final StringBuffer sb = new StringBuffer();
-		for (String s : strings) {
-			sb.append(s);
-			sb.append(separator);
+		if (strings.isEmpty()) {
+			return "";
+		} else if (1 == strings.size()) {
+			return strings.get(0);
+		} else {
+			final StringBuffer sb = new StringBuffer(strings.get(0));
+			for (int i = 1; i < strings.size(); i++) {
+				sb.append(separator);
+				sb.append(strings.get(i));
+			}
+			return sb.toString();
 		}
-		if (strings.size() > 0) {
-			// Remove trailing separator
-			sb.substring(0, sb.length() - 1);
-		}
-		return sb.toString();
 	}
 
 	@Override
