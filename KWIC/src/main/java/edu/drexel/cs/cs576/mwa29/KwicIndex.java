@@ -38,13 +38,14 @@ public class KwicIndex {
 		Collections.sort(sortedIndex);
 		outputStream.println("<HTML><HEAD/>");
 		outputStream.println("<BODY>");
-		outputStream.println("<TABLE border='1'>");
+		outputStream.println("<TABLE>");
 		for (KwicEntry entry : sortedIndex) {
 			outputStream.println(entry.toHtmlRow());
 		}
 		outputStream.println("</TABLE>");
 		outputStream.println("</BODY>");
 		outputStream.println("</HTML>");
+		outputStream.flush();
 	}
 
 	private PrintWriter getOutputStream(final String outputFile)
