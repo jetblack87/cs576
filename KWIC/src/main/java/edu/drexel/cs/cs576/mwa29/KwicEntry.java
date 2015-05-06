@@ -34,10 +34,11 @@ public class KwicEntry implements Comparable<KwicEntry> {
 		return String
 				.format("%s [%s] %s", beforeKeyword, keyword, afterKeyword);
 	}
-	
+
 	public String toHtmlRow() {
-		return String
-				.format("<TR><TD>%s</TD><TD>%s</TD><TD><BOLD>%s</BOLD></TD></TR>", beforeKeyword, keyword, afterKeyword);
+		return String.format(
+				"<TR><TD>%s</TD><TD>%s</TD><TD><BOLD>%s</BOLD></TD></TR>",
+				beforeKeyword, keyword, afterKeyword);
 	}
 
 	private static String join(String separator, List<String> strings) {
@@ -51,6 +52,17 @@ public class KwicEntry implements Comparable<KwicEntry> {
 			sb.substring(0, sb.length() - 1);
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof KwicEntry) {
+			return this.keyword.equals(((KwicEntry) o).keyword)
+					&& this.beforeKeyword.equals(((KwicEntry) o).beforeKeyword)
+					&& this.afterKeyword.equals(((KwicEntry) o).afterKeyword);
+		} else {
+			return false;
+		}
 	}
 
 	@Override

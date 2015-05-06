@@ -67,9 +67,9 @@ public class KwicGenerator {
 	private Scanner getInputScanner(final String inputFile)
 			throws FileNotFoundException {
 		if (Constants.STDIN.equals(inputFile.toLowerCase())) {
-			return new Scanner(System.in);
+			return new Scanner(System.in, "UTF-8");
 		} else {
-			return new Scanner(new File(inputFile));
+			return new Scanner(new File(inputFile), "UTF-8");
 		}
 	}
 
@@ -78,7 +78,7 @@ public class KwicGenerator {
 		final List<String> stopWordList = new ArrayList<String>();
 		final File file = new File(stopWordFile);
 		if (file.exists()) {
-			final Scanner stopWordScanner = new Scanner(file);
+			final Scanner stopWordScanner = new Scanner(file, "UTF-8");
 
 			while (stopWordScanner.hasNext()) {
 				stopWordList.add(stopWordScanner.next().toLowerCase());
