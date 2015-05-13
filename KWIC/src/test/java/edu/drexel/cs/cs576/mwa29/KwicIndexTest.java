@@ -92,6 +92,6 @@ public class KwicIndexTest {
 	public void getOutputStream_badFile_throwsFileNotFoundException()
 			throws FileNotFoundException, UnsupportedEncodingException {
 		final KwicIndex index = new KwicIndex();
-		index.printHtml("   ");
+		index.printHtml("\0");
 	}
 }
