@@ -64,7 +64,7 @@ public class KwicGenerator {
 		return kwicIndex;
 	}
 
-	private Scanner getInputScanner(final String inputFile)
+	protected Scanner getInputScanner(final String inputFile)
 			throws FileNotFoundException {
 		if (Constants.STDIN.equals(inputFile.toLowerCase())) {
 			return new Scanner(System.in, "UTF-8");
@@ -73,7 +73,7 @@ public class KwicGenerator {
 		}
 	}
 
-	private List<String> getStopWordList(final String stopWordFile)
+	protected List<String> getStopWordList(final String stopWordFile)
 			throws FileNotFoundException {
 		final List<String> stopWordList = new ArrayList<String>();
 		final File file = new File(stopWordFile);
