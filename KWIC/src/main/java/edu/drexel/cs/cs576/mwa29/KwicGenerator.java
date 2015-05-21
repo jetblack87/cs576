@@ -40,22 +40,21 @@ public class KwicGenerator {
 				if (!stopWordList.contains(nextWord.toLowerCase())) {
 					final int beforeLength = i < Constants.MAX_BEFORE_ENTRY ? i
 							: Constants.MAX_BEFORE_ENTRY;
-					final int afterLength = (tokenizedLine.size() - i < Constants.MAX_AFTER_ENTRY) ? (tokenizedLine
-							.size() - i) : Constants.MAX_AFTER_ENTRY;
+					final int afterLength = (tokenizedLine.size() - i < Constants.MAX_AFTER_ENTRY + 1) ? (tokenizedLine
+							.size() - i) : Constants.MAX_AFTER_ENTRY + 1;
 
-					if (i == 0) {
-						kwicIndex.add(new KwicEntry(nextWord,
-								new ArrayList<String>(), tokenizedLine.subList(
-										i + 1, i + afterLength)));
-					} else if (i == tokenizedLine.size()) {
-						kwicIndex.add(new KwicEntry(nextWord, tokenizedLine
-								.subList(i - beforeLength, i),
-								new ArrayList<String>()));
-					} else {
-						kwicIndex.add(new KwicEntry(nextWord, tokenizedLine
-								.subList(i - beforeLength, i), tokenizedLine
-								.subList(i + 1, i + afterLength)));
+					final List<String> beforeKeywordList = new ArrayList<String>(
+							tokenizedLine.subList(i - beforeLength, i));
+					if (i > Constants.MAX_BEFORE_ENTRY) {
+						beforeKeywordList.add(0,"...");
 					}
+					final List<String> afterKeywordList = new ArrayList<String>(
+							tokenizedLine.subList(i + 1, i + afterLength));
+					if (tokenizedLine.size() - i > Constants.MAX_AFTER_ENTRY + 1) {
+						afterKeywordList.add("...");
+					}
+					kwicIndex.add(new KwicEntry(nextWord, beforeKeywordList,
+							afterKeywordList));
 				}
 			}
 
