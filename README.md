@@ -33,5 +33,8 @@ present the output in a nice way.
 
 The Jenkins server can be found at the following link: http://tux64-11.cs.drexel.edu:8080/
 
-From the [http://tux64-11.cs.drexel.edu:8080/job/KWIC/ KWIC] page can be seen the
+From the <A href="http://tux64-11.cs.drexel.edu:8080/job/KWIC/">KWIC</A> page can be seen the
 build history as well as the reports in graph form.
+
+Triggers have been setup to automatically kick-off a Jenkins build whenever a new checkin
+occurs in this Github project.
